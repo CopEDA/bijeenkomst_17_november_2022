@@ -99,7 +99,7 @@ opschoon_fun <- function(filename){
     "Kwaliteitsoordeel.code")
   
   read_csv2(filename, 
-            col_types = cols(Numeriekewaarde = col_number(), 
+            col_types = cols(Numeriekewaarde = col_number(locale = locale(decimal_mark = ".")), 
                              Begindatum = col_date(),
                              Begintijd = col_time(),
                              .default = col_character()),
@@ -112,9 +112,9 @@ opschoon_fun <- function(filename){
                na = "")
 }
 
-
+# tictoc::tic("Opschonen alle IM-metingbestanden")
 walk(files_IM, opschoon_fun)
-
+# tictoc::toc()
 
 
 
