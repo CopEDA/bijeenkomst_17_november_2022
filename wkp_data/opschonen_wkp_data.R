@@ -99,11 +99,12 @@ opschoon_fun <- function(filename){
     "Kwaliteitsoordeel.code")
   
   read_csv2(filename, 
-            col_types = cols(Numeriekewaarde = col_number(locale = locale(decimal_mark = ".")), 
+            col_types = cols(Numeriekewaarde = col_number(), 
                              Begindatum = col_date(),
                              Begintijd = col_time(),
                              .default = col_character()),
-            col_select = any_of(im_kolommen)) %>% 
+            col_select = any_of(im_kolommen),
+            locale = locale(decimal_mark = ".")) %>% 
     
     mutate(across(where(is.character), ~str_remove_all(.x, '"'))) %>% 
     left_join(meetpunten_clean, by = c("Meetobject.namespace", "Meetobject.lokaalID")) %>% 
